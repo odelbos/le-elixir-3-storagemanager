@@ -19,6 +19,7 @@ defmodule StorageManager.MixProject do
 
   defp deps do
     [
+      {:jason, "~> 1.3"},
       {:httpoison, "~> 1.8"}
     ]
   end
