@@ -31,6 +31,9 @@ storage_manager-*.tar
 /config/*
 !/config/.keep
 
+# Ignore build binary
+storage_manager
+
 # Ignore Working files
 OLD.*
 ORIG.*
