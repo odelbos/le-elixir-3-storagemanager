@@ -60,12 +60,8 @@ defmodule StorageManager do
     b64_pub_key = :public_key.der_encode(:RSAPublicKey, pub_key)
       |> Base.encode64(padding: false)
 
-    storage_key = :crypto.strong_rand_bytes 32
-
-    # Generate AES storage jey and  and encrypt it with the RSA private key
-    b64_storage_key = :crypto.strong_rand_bytes 32
-      |> Base.decode64!(padding: false)
-      |> :public_key.encrypt_private(priv_key)
+    # Generate AES storage key and  and encrypt it with the RSA private key
+    b64_storage_key = :crypto.strong_rand_bytes(32)
       |> Base.encode64(padding: false)
 
     # -----
@@ -116,9 +112,9 @@ defmodule StorageManager do
 
     # Encrypt the storage key
     b64_storage_key = entry[:storage_key]
-    #   |> Base.decode64!(padding: false)
-    #   |> :public_key.encrypt_private(priv_key)
-    #   |> Base.encode64(padding: false)
+      |> Base.decode64!(padding: false)
+      |> :public_key.encrypt_private(priv_key)
+      |> Base.encode64(padding: false)
 
     # -----
 
