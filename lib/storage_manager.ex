@@ -1,4 +1,5 @@
 defmodule StorageManager do
+  require Timer
 
   def main(args) do
     if args == [] do
@@ -133,16 +134,16 @@ defmodule StorageManager do
 
     # -----
 
-    # Send the payload to the server
-    t1 = :os.system_time :millisecond
-    response = HTTPoison.post(entry[:url], payload, [{"Content-Type", "text/plain"}])
-    t2 = :os.system_time :millisecond
+    # Send the setup to the remote server
+    duration = Timer.duration :millisecond do
+      response = HTTPoison.post(entry[:url], payload, [{"Content-Type", "text/plain"}])
+    end
 
     # -----
 
     # Result
     nl()
-    IO.puts "Duration : #{t2 - t1}ms"
+    IO.puts "Duration : #{duration}ms"
     case response do
       {:ok, %HTTPoison.Response{body: body, status_code: status}} ->
         IO.puts "Status : #{status}"
